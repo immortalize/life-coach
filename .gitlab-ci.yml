@@ -1,0 +1,11 @@
+stages:
+  - dev
+  - prod
+
+deploy_prod:
+  stage: prod
+  script:
+    - echo "Deploy to prod server"
+
+
+
