@@ -6,6 +6,8 @@ deploy_prod:
   stage: prod
   script:
     - echo "Deploy to prod server"
+  only:
+    - master@heroku
 
 
 
