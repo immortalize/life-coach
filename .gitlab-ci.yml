@@ -7,7 +7,5 @@ deploy_prod:
   script:
     - echo "Deploy to prod server"
   only:
-    - master@heroku
-
-
+    - master@heroku/lifecoach2016
 
