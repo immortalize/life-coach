@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Reason;
+use App\Goal;
 use Illuminate\Http\Request;
 
 class ReasonController extends Controller
@@ -26,8 +27,12 @@ class ReasonController extends Controller
      */
     public function create($goal_id)
     {
+        $user_id = Auth::id();
+
+        $goal = Goal::where('user_id', $user_id)->find($goal_id);
+
         return view('create_reason_form', [
-            'goal_id' => $goal_id
+            'goal' => $goal
             ]
         );
     }

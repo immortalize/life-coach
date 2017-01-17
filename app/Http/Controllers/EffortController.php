@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Effort;
+use App\Goal;
 
 class EffortController extends Controller
 {
@@ -26,9 +29,16 @@ class EffortController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($goal_id)
     {
-        return view('create_effort_form');
+        $user_id = Auth::id();
+
+        $goal = Goal::where('user_id', $user_id)->find($goal_id);
+
+        return view('create_effort_form', [
+                'goal' => $goal
+            ]
+        );
 
     }
 
@@ -40,7 +50,12 @@ class EffortController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $effort = new Effort();
+        $effort->goal_id = $request->goal_id;
+        $effort->desc = $request->effort_desc;
+        $effort->save();
+
+        return redirect('/goals/'.$request->goal_id);
     }
 
     /**
@@ -83,8 +98,10 @@ class EffortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $goal_id)
     {
-        //
+        Effort::findOrFail($id)->delete();
+        return redirect('/goals/'.$goal_id);
+
     }
 }

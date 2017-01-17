@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Goal;
 use App\GoalRelation;
-
 use App\Reason;
+use App\Effort;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -84,10 +85,13 @@ class GoalController extends Controller
         //$reasons = $rc->show($id);
         $reasons = Reason::where('goal_id', $id)->get();
 
+        $efforts = Effort::where('goal_id', $id)->get();
+
         return view('a_goal', [
             'goal' => $goal,
             'sub_goals' => $sub_goals,
-            'reasons' => $reasons
+            'reasons' => $reasons,
+            'efforts' => $efforts
         ]);
     }
 
@@ -185,8 +189,9 @@ class GoalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store_sub(Request $request, $parent_goal_id)
+    public function store_sub(Request $request)
     {
+//        print_r($request);
         /*
         $goal = new Goal;
         $user_id = Auth::id();
@@ -204,8 +209,14 @@ class GoalController extends Controller
                 'desc' => $request->goal_desc,
             ]);
 
+        // $this->associate_sub($request->parent_goal_id, $sub_goal_id);
 
-        return $this->associate_sub($parent_goal_id, $sub_goal_id);
+        $relation = new GoalRelation;
+        $relation->goal_id = $request->parent_goal_id;
+        $relation->child_goal_id = $sub_goal_id;
+        $relation->save();
+
+        return redirect('/goals/'.$request->parent_goal_id);
     }
 
 

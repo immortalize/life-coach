@@ -30,8 +30,12 @@ Route::post('goal/associate/store-sub/{parent_goal_id}/sub/{sub_goal_id}', 'Goal
  *  create a goas as a sub goal
  */
 Route::get('goal/create-sub/{parent_goal_id}', 'GoalController@create_sub');
-Route::post('goals/store-sub/{parent_goal_id}', 'GoalController@store_sub');
+Route::post('goals/store-sub', 'GoalController@store_sub');
 
 Route::get('reasons/create/goal/{goal_id}', 'ReasonController@create');
 Route::post('reasons', 'ReasonController@store');
 Route::delete('reasons/{id}/goal/{goal_id}', 'ReasonController@destroy');
+
+Route::get('efforts/create/goal/{goal_id}', 'EffortController@create');
+Route::post('efforts', 'EffortController@store');
+Route::delete('efforts/{id}/goal/{goal_id}', 'EffortController@destroy');

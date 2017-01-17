@@ -16,6 +16,7 @@ class CreateEffortsTable extends Migration
         Schema::create('efforts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('goal_id');
+            $table->text('desc');
             $table->timestamp('start_time');
             $table->timestamp('end_time')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();

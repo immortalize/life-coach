@@ -7,8 +7,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Create a sub-goal for  {{$parent_goal->name }}!</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/goals/store-sub/'. $parent_goal->id) }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/goals/store-sub/') }}">
                         {{ csrf_field() }}
+                        <input type="hidden" name="parent_goal_id" value=" {{ $parent_goal->id }} ">
 
                         <div class="form-group{{ $errors->has('goal_name') ? ' has-error' : '' }}">
                             <label for="goal_name" class="col-md-4 control-label">Goal Name</label>

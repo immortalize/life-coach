@@ -54,6 +54,49 @@
                 </div>
                 {{-- Reasons End  --}}
 
+                {{-- Efforts Begin--}}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Efforts</div>
+                    <div class="panel-body">
+                        @if (count($efforts) > 0)
+                            <table class="table table-striped user-table">
+
+{{--
+                                <thead>
+                                <th>No</th>
+                                <th>description</th>
+                                <th>&nbsp;</th>
+                                </thead>
+--}}
+                                <tbody>
+                                @foreach ($efforts as $effort)
+                                    <tr>
+                                        <td class="table-text"><div>{{ $effort->desc }}</div></td>
+                                        <!-- Effort Delete Button -->
+                                        <td>
+                                            <form action="{{ url('efforts/'.$effort->id) . '/goal/' .$goal->id }}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="fa fa-btn fa-trash"></i>Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                            <a href="{{ url('/efforts/create/goal/'.$goal->id) }}">Add a effort </a>
+
+                        @else
+                            There is no efforts yet. <a href="{{ url('/efforts/create/goal/'.$goal->id) }}">Add a effort! </a>
+                        @endif
+                    </div>
+                </div>
+                {{-- Efforts End  --}}
+
                 {{-- Sub Goals Begin--}}
                 <div class="panel panel-default">
                     <div class="panel-heading">Sub Goals</div>
@@ -91,7 +134,7 @@
                             <br>
                             or <a href="{{ url('goal/associate/select-sub/'.$goal->id) }}"> select from existing goals!</a>
                         @else
-                            There is no sub-goals yet. <a href="{{ url('/goals/create') }}">Create a sub-goal </a>
+                            There is no sub-goals yet. <a href="{{ url('goal/create-sub/'.$goal->id) }}">Create a sub-goal </a>
                             <br>
                             or <a href="{{ url('goal/associate/select-sub/'.$goal->id) }}"> select from existing goals!</a>
                         @endif
