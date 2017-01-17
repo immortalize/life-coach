@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class ReasonController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -95,8 +100,8 @@ class ReasonController extends Controller
      */
     public function destroy($id, $goal_id)
     {
-        Reason::findOrFail($id)->delete();
-        return redirect('/goals/'.$goal_id);
+            Reason::findOrFail($id)->delete();
+            return redirect('/goals/'.$goal_id);
 
     }
 }
