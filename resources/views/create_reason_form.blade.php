@@ -9,7 +9,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/reasons') }}">
                         {{ csrf_field() }}
-                        <input name="goal_id" type="hidden" value="{{ $goal_id }}">
+                        <input name="goal_id" type="hidden" value="{{ $goal->id }}">
 
                         <div class="form-group{{ $errors->has('reason_desc') ? ' has-error' : '' }}">
                             <label for="reason_desc" class="col-md-4 control-label">Reason Description</label>
