@@ -97,6 +97,49 @@
                 </div>
                 {{-- Efforts End  --}}
 
+                {{-- Steps Begin--}}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Steps</div>
+                    <div class="panel-body">
+                        @if (count($steps) > 0)
+                            <table class="table table-striped user-table">
+
+{{--
+                                <thead>
+                                <th>No</th>
+                                <th>description</th>
+                                <th>&nbsp;</th>
+                                </thead>
+--}}
+                                <tbody>
+                                @foreach ($steps as $step)
+                                    <tr>
+                                        <td class="table-text"><div>{{ $step->desc }}</div></td>
+                                        <!-- Step Delete Button -->
+                                        <td>
+                                            <form action="{{ url('steps/'.$step->id) . '/goal/' .$goal->id }}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="fa fa-btn fa-trash"></i>Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                            <a href="{{ url('/steps/create/goal/'.$goal->id) }}">Add a step</a>
+
+                        @else
+                            There is no steps yet. <a href="{{ url('/steps/create/goal/'.$goal->id) }}">Add a step! </a>
+                        @endif
+                    </div>
+                </div>
+                {{-- Steps End  --}}
+
                 {{-- Sub Goals Begin--}}
                 <div class="panel panel-default">
                     <div class="panel-heading">Sub Goals</div>

@@ -39,3 +39,7 @@ Route::delete('reasons/{id}/goal/{goal_id}', 'ReasonController@destroy');
 Route::get('efforts/create/goal/{goal_id}', 'EffortController@create');
 Route::post('efforts', 'EffortController@store');
 Route::delete('efforts/{id}/goal/{goal_id}', 'EffortController@destroy');
+
+Route::get('steps/create/goal/{goal_id}', 'StepController@create');
+Route::post('steps', 'StepController@store');
+Route::delete('steps/{id}/goal/{goal_id}', 'StepController@destroy');

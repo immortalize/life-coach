@@ -7,6 +7,7 @@ use App\GoalRelation;
 use App\Reason;
 use App\Effort;
 
+use App\Step;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -87,10 +88,13 @@ class GoalController extends Controller
 
         $efforts = Effort::where('goal_id', $id)->get();
 
+        $steps = Step::where('goal_id', $id)->get();
+
         return view('a_goal', [
             'goal' => $goal,
             'sub_goals' => $sub_goals,
             'reasons' => $reasons,
+            'steps' => $steps,
             'efforts' => $efforts
         ]);
     }
