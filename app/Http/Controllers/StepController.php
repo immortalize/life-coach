@@ -73,29 +73,34 @@ class StepController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        //
+
+
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id, Request $request)
     {
-        //
+        $step = Step::where('id', $request->id)
+            ->update(['state' => $request->state]);
+
+        return redirect('/goals/'.$request->goal_id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @param  int  $goal_id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id, $goal_id)

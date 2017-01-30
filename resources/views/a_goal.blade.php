@@ -115,6 +115,29 @@
                                 @foreach ($steps as $step)
                                     <tr>
                                         <td class="table-text"><div>{{ $step->desc }}</div></td>
+                                        <td class="table-text"><div>{{ $step->state }}</div></td>
+                                        <!-- Step Edit Button -->
+                                        <td>
+                                            <form action="{{ url('steps/'.$step->id) }}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('PUT') }}
+
+                                                <input type="hidden" name="goal_id" value=" {{ $goal->id }} ">
+
+                                                @if ($step->state == 'pending')
+
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="fa fa-btn fa-trash"></i>Mark It Done
+                                                    </button>
+                                                    <input type="hidden" name="state" value="done">
+                                                @elseif ($step->state == 'done')
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="fa fa-btn fa-trash"></i>Mark It Pending
+                                                    </button>
+                                                    <input type="hidden" name="state" value="pending">
+                                                @endif
+                                            </form>
+                                        </td>
                                         <!-- Step Delete Button -->
                                         <td>
                                             <form action="{{ url('steps/'.$step->id) . '/goal/' .$goal->id }}" method="POST">

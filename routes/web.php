@@ -43,3 +43,4 @@ Route::delete('efforts/{id}/goal/{goal_id}', 'EffortController@destroy');
 Route::get('steps/create/goal/{goal_id}', 'StepController@create');
 Route::post('steps', 'StepController@store');
 Route::delete('steps/{id}/goal/{goal_id}', 'StepController@destroy');
+Route::put('steps/{id}', 'StepController@update');
