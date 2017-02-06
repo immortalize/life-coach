@@ -104,13 +104,12 @@
                         @if (count($steps) > 0)
                             <table class="table table-striped user-table">
 
-{{--
                                 <thead>
-                                <th>No</th>
-                                <th>description</th>
+                                <th>Step Name</th>
+                                <th>Step State</th>
+                                <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                                 </thead>
---}}
                                 <tbody>
                                 @foreach ($steps as $step)
                                     <tr>
@@ -122,7 +121,7 @@
                                                 {{ csrf_field() }}
                                                 {{ method_field('PUT') }}
 
-                                                <input type="hidden" name="goal_id" value=" {{ $goal->id }} ">
+                                                <input type="hidden" name="goal_id" value="{{ $goal->id }}">
 
                                                 @if ($step->state == 'pending')
 
@@ -154,7 +153,7 @@
                                 </tbody>
                             </table>
 
-                            <a href="{{ url('/steps/create/goal/'.$goal->id) }}">Add a step</a>
+                            <a href="{{ url('/steps/create/goal/'.$goal->id) }}">Add another step</a>
 
                         @else
                             There is no steps yet. <a href="{{ url('/steps/create/goal/'.$goal->id) }}">Add a step! </a>
@@ -162,6 +161,53 @@
                     </div>
                 </div>
                 {{-- Steps End  --}}
+
+                {{-- Motivators Begin--}}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Motivators</div>
+                    <div class="panel-body">
+                        @if (count($motivators) > 0)
+                            <table class="table table-striped user-table">
+
+                                {{--
+                                                                <thead>
+                                                                <th>No</th>
+                                                                <th>description</th>
+                                                                <th>&nbsp;</th>
+                                                                </thead>
+                                --}}
+                                <tbody>
+                                @foreach ($motivators as $motivator)
+                                    <tr>
+                                        <td class="table-text">
+                                            <a href="{{ url('motivators/'.$motivator->id) }}">
+                                                <div>{{ $motivator->name }}</div>
+                                            </a>
+                                        </td>
+                                        <!-- user Delete Button -->
+                                        <td>
+                                            <form action="{{ url('motivators/'.$motivator->id) . '/goal/' .$goal->id }}" method="POST">
+                                                {{ csrf_field() }}
+                                                {{ method_field('DELETE') }}
+
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="fa fa-btn fa-trash"></i>Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+
+                            <a href="{{ url('/motivators/create/goal/'.$goal->id) }}">Add a motivator </a>
+
+                        @else
+                            There is no motivators yet. <a href="{{ url('/motivators/create/goal/'.$goal->id) }}">Add a motivator! </a>
+                        @endif
+                    </div>
+                </div>
+                {{-- motivators End  --}}
 
                 {{-- Sub Goals Begin--}}
                 <div class="panel panel-default">

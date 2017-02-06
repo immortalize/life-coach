@@ -44,3 +44,9 @@ Route::get('steps/create/goal/{goal_id}', 'StepController@create');
 Route::post('steps', 'StepController@store');
 Route::delete('steps/{id}/goal/{goal_id}', 'StepController@destroy');
 Route::put('steps/{id}', 'StepController@update');
+
+//Route::resource('motivators', 'MotivatorController');
+Route::get('motivators/create/goal/{goal_id}', 'MotivatorController@create');
+Route::get('motivators/{goal_id}', 'MotivatorController@show');
+Route::post('motivators', 'MotivatorController@store');
+Route::delete('motivators/{id}/goal/{goal_id}', 'MotivatorController@destroy');

@@ -6,8 +6,10 @@ use App\Goal;
 use App\GoalRelation;
 use App\Reason;
 use App\Effort;
-
 use App\Step;
+use App\Motivator;
+use App\MotivatorRelation;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -74,28 +76,33 @@ class GoalController extends Controller
     {
         $user_id = Auth::id();
 
-        //$goal = Goal::where('id', $id)->get();
-
         $goal = Goal::where('user_id', $user_id)->find($id);
+
         $sub_goals = DB::table('goals')
             ->join('goal_relations', 'goals.id', '=', 'goal_relations.child_goal_id')
             ->select('goals.id', 'goals.name', 'goals.desc')
             ->where('goal_relations.goal_id', $id)
             ->get();
-        //$rc = new ReasonController();
-        //$reasons = $rc->show($id);
+
         $reasons = Reason::where('goal_id', $id)->get();
 
         $efforts = Effort::where('goal_id', $id)->get();
 
         $steps = Step::where('goal_id', $id)->get();
 
+        $motivators = DB::table('motivators')
+            ->join('motivator_relations', 'motivator_id', '=', 'motivators.id')
+            ->select('motivators.id', 'motivators.name')
+            ->where('motivator_relations.goal_id', $id)
+            ->get();
+
         return view('a_goal', [
             'goal' => $goal,
             'sub_goals' => $sub_goals,
             'reasons' => $reasons,
             'steps' => $steps,
-            'efforts' => $efforts
+            'efforts' => $efforts,
+            'motivators' => $motivators
         ]);
     }
 
