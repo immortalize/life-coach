@@ -2,7 +2,6 @@ Being the richest man in the cemetery doesn't matter to me. Going to bed at nigh
 
 Steve Jobs
 
-
 # Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
