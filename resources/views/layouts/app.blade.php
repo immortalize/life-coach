@@ -70,6 +70,13 @@
                                             {{ csrf_field() }}
                                         </form>
                                     </li>
+
+                                    <li>
+                                        <a href="{{ url('/sleep') }}">
+                                            Sleep
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </li>
                         @endif

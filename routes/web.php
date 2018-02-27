@@ -50,3 +50,9 @@ Route::get('motivators/create/goal/{goal_id}', 'MotivatorController@create');
 Route::get('motivators/{goal_id}', 'MotivatorController@show');
 Route::post('motivators', 'MotivatorController@store');
 Route::delete('motivators/{id}/goal/{goal_id}', 'MotivatorController@destroy');
+
+//sleep
+Route::get('/sleep', 'SleepController@index');
+Route::get('/sleep/create', 'SleepController@create');
+Route::post('/sleep/store', 'SleepController@store');
+Route::delete('sleep/{id}', 'SleepController@destroy');

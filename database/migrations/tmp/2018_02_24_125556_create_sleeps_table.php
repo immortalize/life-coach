@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMotivatorRelationsTable extends Migration
+class CreateSleepsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateMotivatorRelationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('motivator_relations', function (Blueprint $table) {
+        Schema::create('sleeps', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('goal_id');
-            $table->integer('motivator_id');
-            $table->timestamps();
+            $table->integer('user_id');
+            $table->dateTime('begin_date')->nullable();
+            $table->dateTime('end_date')->nullable();
         });
     }
 
@@ -28,6 +28,6 @@ class CreateMotivatorRelationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('motivator_relations');
+        Schema::dropIfExists('sleeps');
     }
 }
