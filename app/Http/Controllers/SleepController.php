@@ -20,7 +20,7 @@ class SleepController extends Controller
     {
 	    $sleep = new Sleep();
 
-	    $sleeps = $sleep->where('user_id', Auth::id())->get();
+	    $sleeps = $sleep->where('user_id', Auth::id())->orderBy('begin_date')->get();
 
 //	    $sleep_status = $sleep->select('end_date')->where('user_id', Auth::id())->latest('begin_date')->first();
 
