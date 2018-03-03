@@ -40,12 +40,16 @@
                                 <th>description</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
+                                <th>&nbsp;</th>
                                 </thead>
                                 <tbody>
                                 @foreach ($sleeps as $sleep)
                                     <tr>
                                         <td class="table-text"><a href="{{ url('sleep/'.$sleep->id) }}"><div>{{ $sleep->begin_date }}</div><a/></td>
                                         <td class="table-text"><a href="{{ url('sleep/'.$sleep->id) }}"><div>{{ $sleep->end_date }}</div></a></td>
+                                        <td>
+                                            {{ $sleep->duration }}
+                                        </td>                                        
                                         <!-- user Delete Button -->
                                         <td>
                                             <form action="{{ url('sleep/'.$sleep->id) }}" method="POST">
@@ -58,9 +62,13 @@
                                             </form>
                                         </td>
                                         <td>
-                                            <button type="submit" class="btn btn-danger">
-                                                <i class="fas fa-edit"></i>Edit
-                                            </button>
+                                            <form action="{{ url('sleep/'.$sleep->id) }}" method="GET">
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="fa fa-btn fa-trash"></i>Edit                                                    
+                                                </button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
