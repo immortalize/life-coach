@@ -83,6 +83,37 @@ class SleepController extends Controller
 
         return redirect('/sleep');
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $sleep = Sleep::findOrFail($id);
+        return view('edit_sleep_form', [
+            'sleep' => $sleep
+        ]);
+        
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        Sleep::findOrFail($request->id)->update([
+            'begin_date'=> $request->begin_date,
+            'end_date'  => $request->end_date
+        ]);
+        return redirect('/sleep');
+    }    
     
     /**
      * Remove the specified resource from storage.

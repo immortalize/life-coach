@@ -53,6 +53,8 @@ Route::delete('motivators/{id}/goal/{goal_id}', 'MotivatorController@destroy');
 
 //sleep
 Route::get('/sleep', 'SleepController@index');
+Route::get('/sleep/{id}', 'SleepController@edit');
+Route::post('/sleep/update', 'SleepController@update');
 Route::get('/sleep/create', 'SleepController@create');
 Route::post('/sleep/store', 'SleepController@store');
 Route::delete('sleep/{id}', 'SleepController@destroy');
