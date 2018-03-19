@@ -11,9 +11,5 @@
   "addons": [
 
   ],
-  "buildpacks": [
-    {
-      "url": "vendor/bin/heroku-php-apache2"
-    }
-  ]
+  "buildpacks": "heroku/php"
 }
