@@ -1,0 +1,19 @@
+{
+  "name": "life-coach-review",
+  "description": "any pull requests should be reviewed by this review app env",
+  "scripts": {
+    "postdeploy": "bin/deploy.sh"
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "vendor/bin/heroku-php-apache2"
+    }
+  ]
+}
