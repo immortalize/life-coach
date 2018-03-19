@@ -11,5 +11,9 @@
   "addons": [
 
   ],
-  "buildpacks": "heroku/php"
+  "buildpacks": [
+    {
+      "url": "heroku/php"
+    }
+  ]
 }
