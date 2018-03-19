@@ -5,6 +5,14 @@
     "postdeploy": "bin/deploy.sh"
   },
   "env": {
+    "APP_DEBUG": {
+      "description": "xxx.",
+      "value": "true"
+    },
+    "APP_LOG_LEVEL": {
+      "description": "xxx.",
+      "value": "debug"
+    }
   },
   "formation": {
   },
