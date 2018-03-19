@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Effort;
 use App\Goal;
+use App\EffortTime;
 
 class EffortController extends Controller
 {
@@ -19,9 +20,9 @@ class EffortController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($goal_id)
     {
-        //
+
     }
 
     /**
@@ -66,7 +67,23 @@ class EffortController extends Controller
      */
     public function show($id)
     {
-        //
+//        $effort = Effort::where('id', $id, 'user_id', Auth::id())->get();
+        $effort = Effort::where('id', $id)->get();
+//        $goal_id = $effort[0]->goal_id;
+
+        $effort_times = EffortTime::where(['user_id' => Auth::id(), 'effort_id' => $id])->orderBy('begin_date')->get();
+        
+        $goal   = Goal::where(['id' => $effort[0]->goal_id])->get();
+
+        $ef = new EffortTimeController();
+
+        return view('an_effort', [
+                'goal'   => $goal[0],
+                'effort' => $effort[0],
+                'effort_times' => $effort_times,
+                'effort_status' => $ef->is_in_effort($id)
+            ]
+        );        
     }
 
     /**
@@ -98,10 +115,21 @@ class EffortController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $goal_id)
+    public function destroy(Request $request)
     {
-        Effort::findOrFail($id)->delete();
-        return redirect('/goals/'.$goal_id);
+        /* work on mass destroy of child entities. this didn't work!
+
+        $effort_time_controller = new EffortController();
+        $effort_times = $effort_time_controller->index($request->id);
+
+        foreach ($effort_times as $effort_time) {
+            # code...
+            EffortTimeController::destroy($effort_time->id);
+        }
+        */
+
+        Effort::findOrFail($request->id)->delete();
+        return redirect('/goals/'.$request->goal_id);
 
     }
 }

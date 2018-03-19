@@ -71,7 +71,11 @@
                                 <tbody>
                                 @foreach ($efforts as $effort)
                                     <tr>
-                                        <td class="table-text"><div>{{ $effort->desc }}</div></td>
+                                        <td class="table-text">
+                                            <a href="{{ url('efforts/'.$effort->id) }}">                                            
+                                                <div>{{ $effort->desc }}</div>
+                                            </a>
+                                        </td>
                                         <!-- Effort Delete Button -->
                                         <td>
                                             <form action="{{ url('efforts/'.$effort->id) . '/goal/' .$goal->id }}" method="POST">
