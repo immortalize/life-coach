@@ -47,9 +47,7 @@
                                     <tr>
                                         <td class="table-text"><a href="{{ url('sleep/'.$sleep->id) }}"><div>{{ $sleep->begin_date }}</div><a/></td>
                                         <td class="table-text"><a href="{{ url('sleep/'.$sleep->id) }}"><div>{{ $sleep->end_date }}</div></a></td>
-                                        <td>
-                                            {{ $sleep->duration }}
-                                        </td>                                        
+                                        <td> {{ $sleep->duration }} </td>                                        
                                         <!-- user Delete Button -->
                                         <td>
                                             <form action="{{ url('sleep/'.$sleep->id) }}" method="POST">
