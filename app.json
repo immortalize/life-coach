@@ -16,11 +16,7 @@
     "APP_KEY": {
       "description": "xxx.",
       "value": "base64:7gPm4ka5+PrZA/bBiECersWKuG+wmmQC56uV0PJOhSM="
-    },
-    "DB_CONNECTION": {
-      "description": "xxx.",
-      "value": "pgsql"
-    }    
+    }
   },
   "formation": {
   },
