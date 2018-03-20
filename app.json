@@ -12,7 +12,12 @@
     "APP_LOG_LEVEL": {
       "description": "xxx.",
       "value": "debug"
+    },
+    "APP_KEY": {
+      "description": "xxx.",
+      "value": "base64:7gPm4ka5+PrZA/bBiECersWKuG+wmmQC56uV0PJOhSM="
     }
+
   },
   "formation": {
   },
