@@ -1,2 +1,2 @@
 # Sync database changes
-php artisan migrate
+php artisan migrate -n --force
