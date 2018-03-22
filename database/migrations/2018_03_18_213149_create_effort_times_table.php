@@ -29,6 +29,6 @@ class CreateEffortTimesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sleeps');
+        Schema::dropIfExists('effort_times');
     }
 }
