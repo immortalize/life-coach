@@ -50,7 +50,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Times Spent</div>
                     <div class="panel-body">
-                        @if (count($effort) > 0)
                             <table class="table table-striped user-table">
 
 {{--
@@ -82,11 +81,7 @@
                                 </tbody>
                             </table>
 
-                            <a href="{{ url('/efforts/create/goal/'.$goal->id) }}">Add a effort </a>
-
-                        @else
-                            There is no efforts yet. <a href="{{ url('/efforts/create/goal/'.$goal->id) }}">Add a effort! </a>
-                        @endif
+                            <a href="{{ url('/efforts/create/goal/'.$goal->id) }}">Add another effort </a>
                     </div>
                 </div>
                 {{-- Efforts End  --}}
