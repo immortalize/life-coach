@@ -8,7 +8,13 @@ if($databaseUrl = getenv('DATABASE_URL')) {
     $username = $url['user'];
     $password = $url['pass'];
     $database = substr($url['path'], 1);
+} else {
+    $host = env('DB_HOST', 'localhost');
+    $username = env('DB_USERNAME', 'forge');
+    $password = env('DB_PASSWORD', '');
+    $database = env('DB_DATABASE', 'forge');
 }
+
 
 return [
 
@@ -75,7 +81,7 @@ return [
             'strict' => true,
             'engine' => null,
         ],
-
+/*
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', 'localhost'),
@@ -88,7 +94,7 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
-/*
+*/
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => $host, //env('DB_HOST', 'localhost'),
@@ -101,7 +107,6 @@ return [
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
-*/
     ],
 
     /*
