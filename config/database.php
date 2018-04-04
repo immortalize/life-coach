@@ -84,7 +84,11 @@ return [
 /*
         'pgsql' => [
             'driver' => 'pgsql',
+<<<<<<< HEAD
             'host' => env('DB_HOST', 'localhost'),
+=======
+            'host' => $host, //env('DB_HOST', 'localhost'),
+>>>>>>> 94ace1aabf7a4e2c2f937e20ac875b3c9e5a429c
             'port' => env('DB_PORT', '5432'),
             'database' =>  env('DB_DATABASE', 'forge'),
             'username' =>  env('DB_USERNAME', 'forge'),
