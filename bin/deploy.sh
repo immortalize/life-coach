@@ -1,2 +1,3 @@
 # Sync database changes
-php artisan migrate -n --force
+php artisan migrate:refresh -n --force
+php artisan cache:clear
