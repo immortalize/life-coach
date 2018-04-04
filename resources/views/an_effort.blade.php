@@ -85,6 +85,7 @@
                     </div>
                 </div>
                 {{-- Efforts End  --}}
+                {{ $daily }}
             </div>
         </div>
     </div>

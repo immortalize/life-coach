@@ -72,6 +72,18 @@ class EffortController extends Controller
 //        $goal_id = $effort[0]->goal_id;
 
         $effort_times = EffortTime::where(['user_id' => Auth::id(), 'effort_id' => $id])->orderBy('begin_date')->get();
+//        $daily_effort_times = strtotime($effort_times->sum());//->format('%H:%I:%S');
+        //EffortTime::where(['user_id' => Auth::id(), 'effort_id' => $id])->sum('duration');
+
+        $sum = 0;
+
+        foreach ($effort_times as $effort_time){
+            $time = strtotime($effort_time->duration) - strtotime('00:00:00');
+            $sum += $time;
+        }
+        $sum = $sum + strtotime('00:00:00');
+        $sum = date("Y m d - H:i:s", $sum);
+
         
         $goal   = Goal::where(['id' => $effort[0]->goal_id])->get();
 
@@ -81,7 +93,8 @@ class EffortController extends Controller
                 'goal'   => $goal[0],
                 'effort' => $effort[0],
                 'effort_times' => $effort_times,
-                'effort_status' => $ef->is_in_effort($id)
+                'effort_status' => $ef->is_in_effort($id),
+                'daily' => $sum
             ]
         );        
     }

@@ -91,7 +91,6 @@ class MotivatorController extends Controller
                 'motivator' => $motivator
             ]
         );
-
     }
 
     /**
@@ -102,7 +101,12 @@ class MotivatorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $motivator = Motivator::find($id);
+
+        return view('edit_motivator_form', [
+                'motivator' => $motivator
+            ]
+        );
     }
 
     /**
@@ -112,9 +116,15 @@ class MotivatorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        Motivator::findOrFail($request->id)->update([
+            'type'=> $request->motivator_type,
+            'name'=> $request->motivator_name,
+            'desc'=> $request->motivator_desc
+        ]);
+//        return redirect('/goals/'.$request->goal_id); //goal_id doesn't come here
+        return redirect('/goals/');
     }
 
     /**
