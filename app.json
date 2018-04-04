@@ -1,0 +1,34 @@
+{
+  "name": "life-coach-review",
+  "description": "any pull requests should be reviewed by this review app env",
+  "scripts": {
+    "postdeploy": "bin/deploy.sh"
+  },
+  "env": {
+    "APP_DEBUG": {
+      "description": "xxx.",
+      "value": "true"
+    },
+    "APP_LOG_LEVEL": {
+      "description": "xxx.",
+      "value": "debug"
+    },
+    "APP_KEY": {
+      "description": "xxx.",
+      "value": "base64:7gPm4ka5+PrZA/bBiECersWKuG+wmmQC56uV0PJOhSM="
+    },
+    "DB_CONNECTION": {
+      "description": "xxx.",
+      "value": "pgsql"
+    }    
+  },
+  "formation": {
+  },
+  "addons": ["heroku-postgresql:hobby-dev"],  
+  "buildpacks": [
+    {
+      "url": "heroku/php"
+    }
+  ]
+}
+
