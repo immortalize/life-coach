@@ -19,6 +19,8 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <a href="{{ url('/goals/create') }}">Create a <b>goal</b> TODAY!</a>
+                        <br><br>
+                        <a href="{{ url('/goals') }}">or, Look at your GOALS!</a>
                     </div>
                 </div>
             </div>
