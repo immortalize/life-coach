@@ -10,13 +10,15 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-
+/*
 Route::get('/', function () {
     return view('welcome');
 });
+*/
 
 Auth::routes();
 
+Route::get('/', 'HomeController@welcome');
 Route::get('/home', 'HomeController@index');
 
 Route::resource('goals', 'GoalController');
@@ -27,7 +29,7 @@ Route::get('goal/associate/select-sub/{parent_goal_id}', 'GoalController@select_
 Route::post('goal/associate/store-sub/{parent_goal_id}/sub/{sub_goal_id}', 'GoalController@associate_sub');
 
 /*
- *  create a goas as a sub goal
+ *  create a goal as a sub goal
  */
 Route::get('goal/create-sub/{parent_goal_id}', 'GoalController@create_sub');
 Route::post('goals/store-sub', 'GoalController@store_sub');
