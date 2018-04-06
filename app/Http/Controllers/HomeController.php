@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Cookie;
 
 class HomeController extends Controller
 {
@@ -34,6 +35,13 @@ class HomeController extends Controller
      */
     public function welcome()
     {
-        return view('welcome1');
+        $returning_user = Cookie::get('visited');
+        if (!$returning_user){
+            Cookie::queue('visited', '1', 60*24*30);
+        }
+
+            return view('welcome1',[
+                'returning_user' => $returning_user
+            ]);
     }    
 }
