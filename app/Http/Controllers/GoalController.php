@@ -13,12 +13,13 @@ use App\MotivatorRelation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Cookie;
 
 class GoalController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -28,14 +29,25 @@ class GoalController extends Controller
      */
     public function index()
     {
-        $user_id = Auth::id();
+        if (Auth::check()) {
+                // The user is logged in...        
+            $this->middleware('auth');
+            $user_id = Auth::id();
 
-        $goals = Goal::where('user_id', $user_id)->orderBy('created_at', 'asc')->get();
+            $goals = Goal::where('user_id', $user_id)->orderBy('created_at', 'asc')->get();
 
-        return view('list_goals', [
-            'goals' => $goals
-        ]);
-
+            return view('list_goals', [
+                'goals' => $goals
+            ]);
+        }
+        else
+        {
+            // if there's a guest and a goal in the cookie
+            $goals = [Cookie::get('guest_goal')];
+            return view('list_goals', [
+                'goals' => $goals
+            ]);
+        }
     }
 
     /**
@@ -57,11 +69,19 @@ class GoalController extends Controller
     public function store(Request $request)
     {
         $goal = new Goal;
-        $user_id = Auth::id();
-        $goal->user_id = $user_id;
         $goal->name = $request->goal_name;
         $goal->desc = $request->goal_desc;
-        $goal->save();
+
+        if (Auth::check()) {
+            // The user is logged in...
+            $goal->user_id = Auth::id();
+            $goal->save();
+
+        }
+        else
+        {
+            Cookie::queue('guest_goal', $goal, 30);            
+        }
 
         return redirect('/goals');
     }
@@ -74,36 +94,48 @@ class GoalController extends Controller
      */
     public function show($id)
     {
-        $user_id = Auth::id();
+        if (Auth::check()) {
+            // The user is logged in...
 
-        $goal = Goal::where('user_id', $user_id)->find($id);
+            $user_id = Auth::id();
 
-        $sub_goals = DB::table('goals')
-            ->join('goal_relations', 'goals.id', '=', 'goal_relations.child_goal_id')
-            ->select('goals.id', 'goals.name', 'goals.desc')
-            ->where('goal_relations.goal_id', $id)
-            ->get();
+            $goal = Goal::where('user_id', $user_id)->find($id);
 
-        $reasons = Reason::where('goal_id', $id)->get();
+            $sub_goals = DB::table('goals')
+                ->join('goal_relations', 'goals.id', '=', 'goal_relations.child_goal_id')
+                ->select('goals.id', 'goals.name', 'goals.desc')
+                ->where('goal_relations.goal_id', $id)
+                ->get();
 
-        $efforts = Effort::where('goal_id', $id)->get();
+            $reasons = Reason::where('goal_id', $id)->get();
 
-        $steps = Step::where('goal_id', $id)->get();
+            $efforts = Effort::where('goal_id', $id)->get();
 
-        $motivators = DB::table('motivators')
-            ->join('motivator_relations', 'motivator_id', '=', 'motivators.id')
-            ->select('motivators.id', 'motivators.name')
-            ->where('motivator_relations.goal_id', $id)
-            ->get();
+            $steps = Step::where('goal_id', $id)->get();
 
-        return view('a_goal', [
-            'goal' => $goal,
-            'sub_goals' => $sub_goals,
-            'reasons' => $reasons,
-            'steps' => $steps,
-            'efforts' => $efforts,
-            'motivators' => $motivators
-        ]);
+            $motivators = DB::table('motivators')
+                ->join('motivator_relations', 'motivator_id', '=', 'motivators.id')
+                ->select('motivators.id', 'motivators.name')
+                ->where('motivator_relations.goal_id', $id)
+                ->get();
+
+            return view('a_goal', [
+                'goal' => $goal,
+                'sub_goals' => $sub_goals,
+                'reasons' => $reasons,
+                'steps' => $steps,
+                'efforts' => $efforts,
+                'motivators' => $motivators
+            ]);
+        }
+        else
+        {
+            // if there's a guest and a goal in the cookie
+            $goal = Cookie::get('guest_goal');
+            return view('a_goal', [
+                'goal' => $goal
+            ]);
+        }
     }
 
     /**

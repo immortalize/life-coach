@@ -20,6 +20,10 @@
     "DB_CONNECTION": {
       "description": "xxx.",
       "value": "pgsql"
+    },
+    "APP_ENV": {
+      "description": "xxx.",
+      "value": "review"
     }    
   },
   "formation": {
@@ -31,4 +35,3 @@
     }
   ]
 }
-

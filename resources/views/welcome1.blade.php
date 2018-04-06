@@ -12,7 +12,7 @@
                         <h4 align="center">You just need some <b>motivation</b>, an <u><b>action</b></u> plan and <i><b>application</b></i></h4>
                         <br>
                         <p align="center">
-                            @if ($returning_user)
+                            @if ($returning_user || !Auth::guest())
                                 <button type="submit" class="btn btn-primary" onclick="window.location='{{ url('/goals') }}'">How's it going?</button>
                             @else
                                 <button type="submit" class="btn btn-primary" onclick="window.location='{{ url('/goals/create') }}'">Make A Wish</button>
