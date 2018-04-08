@@ -76,14 +76,14 @@ class GoalController extends Controller
             // The user is logged in...
             $goal->user_id = Auth::id();
             $goal->save();
-
+        return redirect('/goals');
         }
         else
         {
             Cookie::queue('guest_goal', $goal, 30);            
         }
 
-        return redirect('/goals');
+        return redirect('/goals/' . rand(5, 15));
     }
 
     /**
@@ -132,8 +132,13 @@ class GoalController extends Controller
         {
             // if there's a guest and a goal in the cookie
             $goal = Cookie::get('guest_goal');
-            return view('a_goal', [
-                'goal' => $goal
+            return view('a_goal_guest', [
+                'goal' => $goal,
+                'sub_goals' => null,
+                'reasons' => null,
+                'steps' => null,
+                'efforts' => null,
+                'motivators' => null
             ]);
         }
     }
