@@ -15,7 +15,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Reasons</div>
                     <div class="panel-body">
-                        @if (count($reasons) > 0)
+                        @if (!is_null($reasons) && count($reasons) > 0)
                             <table class="table table-striped user-table">
 
 {{--
@@ -58,7 +58,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Efforts</div>
                     <div class="panel-body">
-                        @if (count($efforts) > 0)
+                        @if (!is_null($efforts) && count($efforts) > 0)
                             <table class="table table-striped user-table">
 
 {{--
@@ -105,7 +105,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Steps</div>
                     <div class="panel-body">
-                        @if (count($steps) > 0)
+                        @if (!is_null($steps) && count($steps) > 0)
                             <table class="table table-striped user-table">
 
                                 <thead>
@@ -170,7 +170,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Motivators</div>
                     <div class="panel-body">
-                        @if (count($motivators) > 0)
+                        @if (!is_null($sub_goals) && count($sub_goals) > 0)
                             <table class="table table-striped user-table">
 
                                 {{--
@@ -217,7 +217,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Sub Goals</div>
                     <div class="panel-body">
-                        @if (count($sub_goals) > 0)
+                        @if (!is_null($sub_goals) && count($sub_goals) > 0)
                             <table class="table table-striped user-table">
                                 <thead>
                                 <th>name</th>
