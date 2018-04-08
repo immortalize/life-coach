@@ -19,7 +19,7 @@ class GoalController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -29,25 +29,12 @@ class GoalController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-                // The user is logged in...        
-            $this->middleware('auth');
-            $user_id = Auth::id();
+//        $user_id = Auth::id();
+        $goals = Goal::where('user_id', Auth::id())->orderBy('created_at', 'asc')->get();
 
-            $goals = Goal::where('user_id', $user_id)->orderBy('created_at', 'asc')->get();
-
-            return view('list_goals', [
-                'goals' => $goals
-            ]);
-        }
-        else
-        {
-            // if there's a guest and a goal in the cookie
-            $goals = [Cookie::get('guest_goal')];
-            return view('list_goals', [
-                'goals' => $goals
-            ]);
-        }
+        return view('list_goals', [
+            'goals' => $goals
+        ]);
     }
 
     /**
@@ -71,19 +58,9 @@ class GoalController extends Controller
         $goal = new Goal;
         $goal->name = $request->goal_name;
         $goal->desc = $request->goal_desc;
-
-        if (Auth::check()) {
-            // The user is logged in...
-            $goal->user_id = Auth::id();
-            $goal->save();
+        $goal->user_id = Auth::id();
+        $goal->save();
         return redirect('/goals');
-        }
-        else
-        {
-            Cookie::queue('guest_goal', $goal, 30);            
-        }
-
-        return redirect('/goals/' . rand(5, 15));
     }
 
     /**
@@ -94,53 +71,36 @@ class GoalController extends Controller
      */
     public function show($id)
     {
-        if (Auth::check()) {
-            // The user is logged in...
+        //            $user_id = Auth::id();
 
-            $user_id = Auth::id();
+        $goal = Goal::where('user_id', Auth::id())->find($id);
 
-            $goal = Goal::where('user_id', $user_id)->find($id);
+        $sub_goals = DB::table('goals')
+            ->join('goal_relations', 'goals.id', '=', 'goal_relations.child_goal_id')
+            ->select('goals.id', 'goals.name', 'goals.desc')
+            ->where('goal_relations.goal_id', $id)
+            ->get();
 
-            $sub_goals = DB::table('goals')
-                ->join('goal_relations', 'goals.id', '=', 'goal_relations.child_goal_id')
-                ->select('goals.id', 'goals.name', 'goals.desc')
-                ->where('goal_relations.goal_id', $id)
-                ->get();
+        $reasons = Reason::where('goal_id', $id)->get();
 
-            $reasons = Reason::where('goal_id', $id)->get();
+        $efforts = Effort::where('goal_id', $id)->get();
 
-            $efforts = Effort::where('goal_id', $id)->get();
+        $steps = Step::where('goal_id', $id)->get();
 
-            $steps = Step::where('goal_id', $id)->get();
+        $motivators = DB::table('motivators')
+            ->join('motivator_relations', 'motivator_id', '=', 'motivators.id')
+            ->select('motivators.id', 'motivators.name')
+            ->where('motivator_relations.goal_id', $id)
+            ->get();
 
-            $motivators = DB::table('motivators')
-                ->join('motivator_relations', 'motivator_id', '=', 'motivators.id')
-                ->select('motivators.id', 'motivators.name')
-                ->where('motivator_relations.goal_id', $id)
-                ->get();
-
-            return view('a_goal', [
-                'goal' => $goal,
-                'sub_goals' => $sub_goals,
-                'reasons' => $reasons,
-                'steps' => $steps,
-                'efforts' => $efforts,
-                'motivators' => $motivators
-            ]);
-        }
-        else
-        {
-            // if there's a guest and a goal in the cookie
-            $goal = Cookie::get('guest_goal');
-            return view('a_goal_guest', [
-                'goal' => $goal,
-                'sub_goals' => null,
-                'reasons' => null,
-                'steps' => null,
-                'efforts' => null,
-                'motivators' => null
-            ]);
-        }
+        return view('a_goal', [
+            'goal' => $goal,
+            'sub_goals' => $sub_goals,
+            'reasons' => $reasons,
+            'steps' => $steps,
+            'efforts' => $efforts,
+            'motivators' => $motivators
+        ]);
     }
 
     /**
