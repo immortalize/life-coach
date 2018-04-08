@@ -13,7 +13,7 @@
                         <br>
                         <p align="center">
                             @if ($returning_user || !Auth::guest())
-                                <button type="submit" class="btn btn-primary" onclick="window.location='{{ url('/login') }}'">How's it going?</button>
+                                <button type="submit" class="btn btn-primary" onclick="window.location='{{ url('/goals') }}'">How's it going?</button>
                             @else
                                 <button type="submit" class="btn btn-primary" onclick="window.location='{{ url('/goals/create') }}'">Make A Wish</button>
                             @endif 
