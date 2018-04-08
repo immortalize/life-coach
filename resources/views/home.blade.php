@@ -1,4 +1,11 @@
 @extends('layouts.app')
+<script type="text/javascript">   
+    function Redirect() 
+    {  
+        window.location="/goals"; 
+    } 
+    setTimeout('Redirect()', 500);
+</script>
 
 @section('content')
 <div class="container">
