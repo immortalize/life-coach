@@ -232,7 +232,7 @@
 
                                         <!-- subgoal delete Button -->
                                         <td>
-                                            <form action="{{ url('goals/'.$goal->id) }}" method="POST">
+                                            <form action="{{ url('goals/'.$subgoal->id) }}" method="POST">
                                                 {{ csrf_field() }}
                                                 {{ method_field('DELETE') }}
 

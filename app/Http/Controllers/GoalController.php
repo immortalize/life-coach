@@ -173,7 +173,9 @@ class GoalController extends Controller
         $relation->child_goal_id = $sub_goal_id;
         $relation->save();
 
-        return redirect('/goals/'.$parent_goal_id);
+        return redirect('/goal/associate/select-sub/'.$parent_goal_id);
+//        return redirect('/goals/'.$parent_goal_id);
+// http://lifecoach.test/goal/associate/select-sub/1        
     }
 
     /**
