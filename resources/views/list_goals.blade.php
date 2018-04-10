@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Current Goals</div>
+                    <div class="panel-heading">Current Goals</div>                    
                     <div class="panel-body">
                         @if (count($goals) > 0)
                             <table class="table table-striped user-table">
@@ -34,7 +34,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-
                             <a href="{{ url('/goals/create') }}">Create another goal!</a>
                         @else
                             There is no goals yet. <a href="{{ url('/goals/create') }}">Create a goal!</a>

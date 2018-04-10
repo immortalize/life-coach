@@ -30,7 +30,8 @@ class GoalController extends Controller
     public function index()
     {
 //        $user_id = Auth::id();
-        $goals = Goal::where('user_id', Auth::id())->orderBy('created_at', 'asc')->get();
+//        $goals = Goal::where('user_id', Auth::id())->orderBy('created_at', 'asc')->get();
+        $goals = Auth::user()->goals()->get();
 
         return view('list_goals', [
             'goals' => $goals
@@ -73,15 +74,19 @@ class GoalController extends Controller
     {
         //            $user_id = Auth::id();
 
-        $goal = Goal::where('user_id', Auth::id())->find($id);
+//        $goal = Goal::where('user_id', Auth::id())->find($id);
+        $goal = Auth::user()->goals()->find($id);
 
+/*
         $sub_goals = DB::table('goals')
             ->join('goal_relations', 'goals.id', '=', 'goal_relations.child_goal_id')
             ->select('goals.id', 'goals.name', 'goals.desc')
             ->where('goal_relations.goal_id', $id)
             ->get();
-
-        $reasons = Reason::where('goal_id', $id)->get();
+*/
+        $sub_goals = $goal->sub_goals()->get();
+//        $sub_goals = $goal->parent_goals()->get();
+        $reasons = $goal->reasons()->get(); // Reason::where('goal_id', $id)->get();
 
         $efforts = Effort::where('goal_id', $id)->get();
 
@@ -147,14 +152,32 @@ class GoalController extends Controller
      */
     public function select_sub($parent_goal_id)
     {
-        $user_id = Auth::id();
+//        $user_id = Auth::id();
 
-        $goals = Goal::where('user_id', $user_id)->where('id', '!=', $parent_goal_id)->orderBy('created_at', 'asc')->get();
+/*        $goals = Goal::where('user_id', $user_id)
+                        ->where('id', '!=', $parent_goal_id)
+                        ->whereNotin()
+                        ->orderBy('created_at', 'asc')
+                        ->get();
+*/
 
-        $parent_goal = Goal::where('user_id', $user_id)->find($parent_goal_id);
+//        $parent_goal = Goal::where('user_id', $user_id)->find($parent_goal_id);
+//        $goals = Auth::user()->goals()-get()->diff($parent_goal);//$parent_goal->doesntHave('sub_goals')->get();
+        $parent_goal = Auth::user()->goals->find($parent_goal_id);
+        $potential_sub_goals = Goal
+                            ::where('user_id',Auth::id())
+                            ->where('id', '<>', $parent_goal_id)
+                            ->whereNotIn('id', $parent_goal->sub_goals->pluck('id'))
+                            ->get();
+
+        // $sub_goals = DB::table('goals')
+        //     ->join('goal_relations', 'goals.id', '=', 'goal_relations.child_goal_id')
+        //     ->select('goals.id', 'goals.name', 'goals.desc')
+        //     ->where('goals.id','<>', $parent_goal_id)
+        //     ->get();
 
         return view('list_goals_for_select_sub', [
-            'goals' => $goals,
+            'goals' => $potential_sub_goals,
             'parent_goal' => $parent_goal
         ]);
 

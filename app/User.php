@@ -26,4 +26,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The goals that belong to the user.
+     */
+    public function goals()
+    {
+        return $this->hasMany('App\Goal');
+    }
 }
