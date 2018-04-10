@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Cookie;
+use Carbon\Carbon;
 
 class GoalController extends Controller
 {
@@ -31,7 +32,7 @@ class GoalController extends Controller
     {
 //        $user_id = Auth::id();
 //        $goals = Goal::where('user_id', Auth::id())->orderBy('created_at', 'asc')->get();
-        $goals = Auth::user()->goals()->get();
+        $goals = Auth::user()->goals()->orderBy('created_at', 'desc')->get();
 
         return view('list_goals', [
             'goals' => $goals
@@ -240,6 +241,8 @@ class GoalController extends Controller
                 'user_id' => $user_id,
                 'name' => $request->goal_name,
                 'desc' => $request->goal_desc,
+                'created_at' =>  Carbon::now(), # \Datetime()
+                'updated_at' => Carbon::now()  # \Datetime(
             ]);
 
         // $this->associate_sub($request->parent_goal_id, $sub_goal_id);
