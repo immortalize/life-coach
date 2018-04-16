@@ -68,31 +68,32 @@ class EffortController extends Controller
     public function show($id)
     {
 //        $effort = Effort::where('id', $id, 'user_id', Auth::id())->get();
-        $effort = Effort::where('id', $id)->get();
+        $effort = Effort::findOrFail($id);//Effort::where('id', $id);
 //        $goal_id = $effort[0]->goal_id;
 
-        $effort_times = EffortTime::where(['user_id' => Auth::id(), 'effort_id' => $id])->orderBy('begin_date')->get();
+        //$effort_times = EffortTime::where(['user_id' => Auth::id(), 'effort_id' => $id])->orderBy('begin_date')->get();
+        $effort_times = $effort->effort_times();//Effort::find($id)->effort_times()->get();
 //        $daily_effort_times = strtotime($effort_times->sum());//->format('%H:%I:%S');
         //EffortTime::where(['user_id' => Auth::id(), 'effort_id' => $id])->sum('duration');
 
         $sum = 0;
 
-        foreach ($effort_times as $effort_time){
+        foreach ($effort->effott_times_of_the_week()->get() as $effort_time){
             $time = strtotime($effort_time->duration) - strtotime('00:00:00');
             $sum += $time;
         }
         $sum = $sum + strtotime('00:00:00');
         $sum = date("Y m d - H:i:s", $sum);
-
         
-        $goal   = Goal::where(['id' => $effort[0]->goal_id])->get();
+        //$goal   = Goal::where(['id' => $effort[0]->goal_id])->get();
+        $goal = $effort->goal()->get();//Effort::find($id)->goal()->get();
 
         $ef = new EffortTimeController();
 
         return view('an_effort', [
                 'goal'   => $goal[0],
-                'effort' => $effort[0],
-                'effort_times' => $effort_times,
+                'effort' => $effort,
+                'effort_times' => $effort_times->get(),
                 'effort_status' => $ef->is_in_effort($id),
                 'daily' => $sum
             ]
