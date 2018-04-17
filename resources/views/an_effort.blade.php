@@ -48,23 +48,16 @@
 
                 {{-- Efforts Begin--}}
                 <div class="panel panel-default">
-                    <div class="panel-heading">Times Spent</div>
+                    <div class="panel-heading">Times Spent This Week</div>
                     <div class="panel-body">
                             <table class="table table-striped user-table">
-
-{{--
-                                <thead>
-                                <th>No</th>
-                                <th>description</th>
-                                <th>&nbsp;</th>
-                                </thead>
---}}
                                 <tbody>
                                 @foreach ($effort_times as $effort_time)                                    
                                     <tr>
                                         <td class="table-text"><a href="{{ url('effort_time/'.$effort_time->id) }}"><div>{{ $effort_time->begin_date }}</div><a/></td>
                                         <td class="table-text"><a href="{{ url('effort_time/'.$effort_time->id) }}"><div>{{ $effort_time->end_date }}</div></a></td>
-                                        <td> {{ $effort_time->duration }} </td>                                        <!-- Effort Delete Button -->
+                                        <td> {{ $effort_time->duration }} </td>
+                                        <!-- Effort Delete Button -->
                                         <td>
                                             <form action="{{ url('effort_time/'.$effort_time->id) }}" method="POST">
                                                 {{ csrf_field() }}
@@ -85,7 +78,17 @@
                     </div>
                 </div>
                 {{-- Efforts End  --}}
-                {{ $daily }}
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">Summary</div>
+                    <div class="panel-body">
+                    <div class="panel-heading">This Week's Sum</div>
+                        {{ $week_sum }}
+                    <div class="panel-heading">Last Week's Sum</div>
+                        {{ $last_week_sum }}                        
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

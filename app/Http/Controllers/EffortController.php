@@ -67,27 +67,31 @@ class EffortController extends Controller
      */
     public function show($id)
     {
-//        $effort = Effort::where('id', $id, 'user_id', Auth::id())->get();
-        $effort = Effort::findOrFail($id);//Effort::where('id', $id);
-//        $goal_id = $effort[0]->goal_id;
+        $effort = Effort::findOrFail($id);
+        $effort_times = $effort->effott_times_of_week();
 
-        //$effort_times = EffortTime::where(['user_id' => Auth::id(), 'effort_id' => $id])->orderBy('begin_date')->get();
-        $effort_times = $effort->effort_times();//Effort::find($id)->effort_times()->get();
-//        $daily_effort_times = strtotime($effort_times->sum());//->format('%H:%I:%S');
-        //EffortTime::where(['user_id' => Auth::id(), 'effort_id' => $id])->sum('duration');
-
+        //this weeks sum
         $sum = 0;
-
-        foreach ($effort->effott_times_of_the_week()->get() as $effort_time){
+        foreach ($effort_times->get() as $effort_time){
             $time = strtotime($effort_time->duration) - strtotime('00:00:00');
             $sum += $time;
         }
         $sum = $sum + strtotime('00:00:00');
-        $sum = date("Y m d - H:i:s", $sum);
+        $sum = date("H:i", $sum);
         
-        //$goal   = Goal::where(['id' => $effort[0]->goal_id])->get();
-        $goal = $effort->goal()->get();//Effort::find($id)->goal()->get();
+        //last weeks sum
+        $sum2 = 0;
+        foreach ($effort->effott_times_of_last_week()->get() as $effort_time){
+            $time = strtotime($effort_time->duration) - strtotime('00:00:00');
+            $sum2 += $time;
+        }
+        $sum2 = $sum2 + strtotime('00:00:00');
+        $sum2 = date("H:i", $sum2);
 
+        //get the goal (parent of effort) of the effort
+        $goal = $effort->goal()->get();
+
+        //we'll use this to check if the status of last effort
         $ef = new EffortTimeController();
 
         return view('an_effort', [
@@ -95,7 +99,8 @@ class EffortController extends Controller
                 'effort' => $effort,
                 'effort_times' => $effort_times->get(),
                 'effort_status' => $ef->is_in_effort($id),
-                'daily' => $sum
+                'week_sum' => $sum,
+                'last_week_sum' => $sum2
             ]
         );        
     }
