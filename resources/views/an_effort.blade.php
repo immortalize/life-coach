@@ -50,6 +50,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Times Spent This Week</div>
                     <div class="panel-body">
+                        @if (count($effort_times) > 0)
                             <table class="table table-striped user-table">
                                 <tbody>
                                 @foreach ($effort_times as $effort_time)                                    
@@ -75,6 +76,10 @@
                             </table>
 
                             <a href="{{ url('/efforts/create/goal/'.$goal->id) }}">Add another effort </a>
+                        @else
+                            There is no effort time log yet. <a href="{{ url('') }}">Log an effort! </a>
+                        @endif
+
                     </div>
                 </div>
                 {{-- Efforts End  --}}

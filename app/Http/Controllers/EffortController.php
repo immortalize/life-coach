@@ -68,29 +68,58 @@ class EffortController extends Controller
     public function show($id)
     {
         $effort = Effort::findOrFail($id);
-        $effort_times = $effort->effott_times_of_week();
-
+        $effort_times = $effort->effott_times_of_week()->get();
+        $effort_times_lastweek = $effort->effott_times_of_last_week()->get();
+/*
         //this weeks sum
         $sum = 0;
-        foreach ($effort_times->get() as $effort_time){
-            $time = strtotime($effort_time->duration) - strtotime('00:00:00');
-            $sum += $time;
+        if(count($effort_times)>0){
+            foreach ($effort_times as $effort_time){
+                $time = strtotime($effort_time->duration) - strtotime('00:00:00');
+                $sum += $time;
+            }
+            //$sum = $sum + strtotime('00:00:00');
+            $sum = date("Y-m-d H:i:s", $sum);        
+            $parsed = date_parse($sum);
+            $sum = ($parsed['hour'] + (($parsed['day'] - 1)*24)) . ':' . $parsed['minute'];
         }
-        //$sum = $sum + strtotime('00:00:00');
-        $sum = date("Y-m-d - H:i:s", $sum);        
-        $parsed = date_parse($sum);
-        $sum = ($parsed['hour'] + (($parsed['day'] - 1)*24)) . ':' . $parsed['minute'];
-        
+/*
         //last weeks sum
         $sum2 = 0;
-        foreach ($effort->effott_times_of_last_week()->get() as $effort_time){
-            $time = strtotime($effort_time->duration) - strtotime('00:00:00');
-            $sum2 += $time;
-        }
-        $sum2 = date("Y-m-d - H:i:s", $sum2);
-        $parsed2 = date_parse($sum2);
-        $sum2 = ($parsed2['hour'] + (($parsed2['day'] - 1)*24)) . ':' . $parsed2['minute'];        
+        if(count($effort_times_lastweek)>0){
+            $time = 0;
+            foreach ($effort_times_lastweek as $effort_time){
+                $time = strtotime($effort_time->duration) - strtotime('00:00:00');
+                $debug = strtotime($effort_time->duration);
+                $sum2 += $time;
+            }
+            $sum2 = date("Y-m-d H:i:s", $sum2);
+            $debug = $sum2;
 
+            $parsed2 = date_parse($sum2);
+            $sum2 = ($parsed2['hour'] + (($parsed2['day'] - 1)*24)) . ':' . $parsed2['minute'];        
+        }
+*/
+        //this weeks sum
+        $sum_this_week = 0;
+        if(count($effort_times)>0){
+            foreach ($effort_times as $effort_time){
+                $parsed = date_parse($effort_time->duration);
+                $sum_this_week += $parsed['hour']*60 + $parsed2['minute'];
+            }
+        }
+        $sum_this_week = floor($sum_this_week/60) . ':' . $sum_this_week % 60;
+
+        //last weeks sum
+        $sum_last_week = 0;
+        if(count($effort_times_lastweek)>0){
+            foreach ($effort_times_lastweek as $effort_time){
+                $parsed = date_parse($effort_time->duration);
+                $sum_last_week += $parsed['hour']*60 + $parsed['minute'];
+            }
+        }
+        $sum_last_week = floor($sum_last_week/60) . ':' . $sum_last_week % 60;
+        
         //get the goal (parent of effort) of the effort
         $goal = $effort->goal()->get();
 
@@ -100,10 +129,10 @@ class EffortController extends Controller
         return view('an_effort', [
                 'goal'   => $goal[0],
                 'effort' => $effort,
-                'effort_times' => $effort_times->get(),
+                'effort_times' => $effort_times_lastweek,
                 'effort_status' => $ef->is_in_effort($id),
-                'week_sum' => $sum,
-                'last_week_sum' => $sum2
+                'week_sum' => $sum_this_week,
+                'last_week_sum' => $sum_last_week,
             ]
         );        
     }

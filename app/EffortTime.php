@@ -14,6 +14,5 @@ class EffortTime extends Model
     public function getDurationAttribute()
 	{
     	return Carbon::parse($this->end_date)->diff(Carbon::parse($this->begin_date))->format('%H:%I:%S');
-
 	}
 }
