@@ -48,4 +48,16 @@ class Effort extends Model
         return $this->hasMany('App\EffortTime')
         	->whereBetween('begin_date', [$start_date, $end_date]);
     }
+
+    /**
+     * effort times of this month
+     */
+    public function effott_times_of_month()
+    {
+		$start_date = Carbon::now()->startOfMonth();//->format('Y/m/d');
+		$end_date 	= Carbon::now()->endOfMonth();//->format('Y/m/d');
+
+        return $this->hasMany('App\EffortTime')
+        	->whereBetween('begin_date', [$start_date, $end_date]);
+    }
 }

@@ -70,6 +70,7 @@ class EffortController extends Controller
         $effort = Effort::findOrFail($id);
         $effort_times = $effort->effott_times_of_week()->get();
         $effort_times_lastweek = $effort->effott_times_of_last_week()->get();
+        $effort_times_month = $effort->effott_times_of_month()->get();
 /*
         //this weeks sum
         $sum = 0;
@@ -119,7 +120,17 @@ class EffortController extends Controller
             }
         }
         $sum_last_week = floor($sum_last_week/60) . ':' . $sum_last_week % 60;
-        
+
+        //this month sum
+        $sum_month = 0;
+        if(count($effort_times_month)>0){
+            foreach ($effort_times_month as $effort_time){
+                $parsed = date_parse($effort_time->duration);
+                $sum_month += $parsed['hour']*60 + $parsed['minute'];
+            }
+        }
+        $sum_month = floor($sum_month/60) . ':' . $sum_month % 60;
+
         //get the goal (parent of effort) of the effort
         $goal = $effort->goal()->get();
 
@@ -133,6 +144,7 @@ class EffortController extends Controller
                 'effort_status' => $ef->is_in_effort($id),
                 'week_sum' => $sum_this_week,
                 'last_week_sum' => $sum_last_week,
+                'sum_month' => $sum_month
             ]
         );        
     }
