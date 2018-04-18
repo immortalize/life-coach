@@ -105,7 +105,7 @@ class EffortController extends Controller
         if(count($effort_times)>0){
             foreach ($effort_times as $effort_time){
                 $parsed = date_parse($effort_time->duration);
-                $sum_this_week += $parsed['hour']*60 + $parsed2['minute'];
+                $sum_this_week += $parsed['hour']*60 + $parsed['minute'];
             }
         }
         $sum_this_week = floor($sum_this_week/60) . ':' . $sum_this_week % 60;
