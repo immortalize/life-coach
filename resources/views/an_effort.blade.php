@@ -45,7 +45,16 @@
                         {{ $effort->desc }}
                     </div>
                 </div>
-
+                <!-- Effort Summaries Begin !-->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Summary</div>
+                    <div class="panel-body">
+                        <div class="panel-heading"><b>This Week's Sum: </b>{{ $week_sum }}</div>
+                        <div class="panel-heading"><b>Last Week's Sum: </b>{{ $last_week_sum }}</div>
+                        <div class="panel-heading"><b>This Month's Sum: </b>{{ $sum_month }}</div>
+                    </div>
+                </div>
+                <!-- Effort Summaries End !-->
                 {{-- Efforts Begin--}}
                 <div class="panel panel-default">
                     <div class="panel-heading">Times Spent This Week</div>
@@ -83,16 +92,6 @@
                     </div>
                 </div>
                 {{-- Efforts End  --}}
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">Summary</div>
-                    <div class="panel-body">
-                        <div class="panel-heading"><b>This Week's Sum: </b>{{ $week_sum }}</div>
-                        <div class="panel-heading"><b>Last Week's Sum: </b>{{ $last_week_sum }}</div>
-                        <div class="panel-heading"><b>This Month's Sum: </b>{{ $sum_month }}</div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

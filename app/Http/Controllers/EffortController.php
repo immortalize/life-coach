@@ -140,7 +140,7 @@ class EffortController extends Controller
         return view('an_effort', [
                 'goal'   => $goal[0],
                 'effort' => $effort,
-                'effort_times' => $effort_times_lastweek,
+                'effort_times' => $effort_times,
                 'effort_status' => $ef->is_in_effort($id),
                 'week_sum' => $sum_this_week,
                 'last_week_sum' => $sum_last_week,
