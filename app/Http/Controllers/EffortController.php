@@ -76,8 +76,10 @@ class EffortController extends Controller
             $time = strtotime($effort_time->duration) - strtotime('00:00:00');
             $sum += $time;
         }
-        $sum = $sum + strtotime('00:00:00');
-        $sum = date("H:i", $sum);
+        //$sum = $sum + strtotime('00:00:00');
+        $sum = date("Y-m-d - H:i:s", $sum);        
+        $parsed = date_parse($sum);
+        $sum = ($parsed['hour'] + (($parsed['day'] - 1)*24)) . ':' . $parsed['minute'];
         
         //last weeks sum
         $sum2 = 0;
@@ -85,8 +87,9 @@ class EffortController extends Controller
             $time = strtotime($effort_time->duration) - strtotime('00:00:00');
             $sum2 += $time;
         }
-        $sum2 = $sum2 + strtotime('00:00:00');
-        $sum2 = date("H:i", $sum2);
+        $sum2 = date("Y-m-d - H:i:s", $sum2);
+        $parsed2 = date_parse($sum2);
+        $sum2 = ($parsed2['hour'] + (($parsed2['day'] - 1)*24)) . ':' . $parsed2['minute'];        
 
         //get the goal (parent of effort) of the effort
         $goal = $effort->goal()->get();

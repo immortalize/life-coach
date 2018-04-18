@@ -82,10 +82,8 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Summary</div>
                     <div class="panel-body">
-                    <div class="panel-heading">This Week's Sum</div>
-                        {{ $week_sum }}
-                    <div class="panel-heading">Last Week's Sum</div>
-                        {{ $last_week_sum }}                        
+                    <div class="panel-heading"><b>This Week's Sum: </b>{{ $week_sum }}</div>
+                    <div class="panel-heading"><b>Last Week's Sum: </b>{{ $last_week_sum }}</div>
                     </div>
                 </div>
 
